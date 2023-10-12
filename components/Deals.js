@@ -7,6 +7,7 @@ import {
 	View,
 	TouchableOpacity,
 } from 'react-native';
+import { Card, ListItem, Button, Icon } from 'react-native-elements';
 
 export default function Deals(props) {
 	const [deals, setdeals] = useState([]);
@@ -29,9 +30,27 @@ export default function Deals(props) {
 					})
 				}
 			>
-				<Image source={{ uri: data.item.media[0] }} style={styles.image} />
-				<Text style={styles.text}>{data.item.title}</Text>
-				<Text style={styles.text}>{data.item.price}</Text>
+				<Card>
+					<View style={styles.user}>
+						<Image
+							style={styles.image}
+							resizeMode='cover'
+							source={{ uri: data.item.media[0] }}
+						/>
+						<Text
+							style={[
+								styles.name,
+								{
+									marginTop: 10,
+									marginBottom: 10,
+								},
+							]}
+						>
+							{data.item.title}
+						</Text>
+						<Text style={styles.text}>{data.item.price}</Text>
+					</View>
+				</Card>
 			</TouchableOpacity>
 		);
 	};

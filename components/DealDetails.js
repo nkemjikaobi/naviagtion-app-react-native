@@ -24,12 +24,44 @@ export default function DealDetails({ route }) {
 
 	return (
 		<ScrollView style={styles.container}>
-			<Image source={{ uri: deal.media[0] }} style={styles.image} />
-			<Text style={styles.text}>{deal.title}</Text>
-			<Text style={styles.text}>{deal.availableQuantity}</Text>
-			<Text style={styles.text}>{deal.description}</Text>
-			<Text style={styles.text}>{deal.charity.name}</Text>
-			<Text style={styles.text}>{deal.price}</Text>
+			<Image source={{ uri: deal?.media[0] }} style={styles.image} />
+			<Text style={[styles.text, { fontStyle: 700, margin: 8 }]}>
+				{deal?.title}
+			</Text>
+			<View
+				style={{
+					display: 'flex',
+					flexDirection: 'row',
+					justifyContent: 'space-between',
+				}}
+			>
+				<Text style={[styles.text, { margin: 10, color: 'purple' }]}>
+					In stock: {deal?.availableQuantity}
+				</Text>
+				<Text style={styles.text}>${deal?.price}</Text>
+			</View>
+			<Text
+				style={[
+					styles.text,
+					{
+						fontStyle: 'italic',
+						fontSize: 14,
+					},
+				]}
+			>
+				{deal?.description}
+			</Text>
+			<Text
+				style={[
+					styles.text,
+					{
+						fontSize: 14,
+						margin: 10,
+					},
+				]}
+			>
+				Donate to this charity: {deal?.charity?.name}
+			</Text>
 		</ScrollView>
 	);
 }
@@ -47,7 +79,7 @@ const styles = StyleSheet.create({
 	image: {
 		width: 350,
 		height: 300,
-    borderRadius: 7,
-    marginBottom: 15
+		borderRadius: 7,
+		marginBottom: 15,
 	},
 });
