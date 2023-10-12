@@ -1,35 +1,53 @@
 import { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, Image, View } from 'react-native';
+import {
+	FlatList,
+	StyleSheet,
+	Text,
+	Image,
+	View,
+	ScrollView,
+} from 'react-native';
 
-export default function DealDetails(props) { 
-    const [deal, setdeal] = useState({});
-    
-  useEffect(() => { 
-      const fetchDealDetail = async () => {
-         
-      };
-      fetchDeals();
-  }, []);
-   
-  return (
-    <View style={styles.container}>
-        
-    </View>
-  );
+export default function DealDetails({ route }) {
+	const [deal, setdeal] = useState(null);
+
+	useEffect(() => {
+		const fetchDealDetail = async id => {
+			fetch(`https://bakesaleforgood.com/api/deals/${id}`)
+				.then(response => response.json()) // string -> json object
+				.then(data => setdeal(data)) // array of deals
+				.catch(error => console.log(error));
+		};
+		if (route.params.singleDeal.key)
+			fetchDealDetail(route.params.singleDeal.key);
+	}, [route]);
+
+	return (
+		<ScrollView style={styles.container}>
+			<Image source={{ uri: deal.media[0] }} style={styles.image} />
+			<Text style={styles.text}>{deal.title}</Text>
+			<Text style={styles.text}>{deal.availableQuantity}</Text>
+			<Text style={styles.text}>{deal.description}</Text>
+			<Text style={styles.text}>{deal.charity.name}</Text>
+			<Text style={styles.text}>{deal.price}</Text>
+		</ScrollView>
+	);
 }
 
 const styles = StyleSheet.create({
-  container: {
-    alignSelf:'stretch',
-    marginLeft:20,
-    marginRight: 10,
-    marginTop: 50
-    },
-    text: {
-        fontSize: 20
-    }, 
-    image: {
-        width: 300,
-        height: 300 
-    }
+	container: {
+		alignSelf: 'stretch',
+		marginLeft: 20,
+		marginRight: 10,
+		marginTop: 50,
+	},
+	text: {
+		fontSize: 20,
+	},
+	image: {
+		width: 350,
+		height: 300,
+    borderRadius: 7,
+    marginBottom: 15
+	},
 });
